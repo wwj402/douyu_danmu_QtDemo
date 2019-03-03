@@ -1,9 +1,7 @@
 ﻿#include "jsonparse.h"
 
 JSONParse::JSONParse()
-{
-
-}
+= default;
 
 bool JSONParse::init(QString &json)
 {

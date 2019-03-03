@@ -16,7 +16,7 @@ class DouyuTcpSocket:public QObject
 {
     Q_OBJECT
 public:
-    DouyuTcpSocket(QObject *parent = 0);
+    DouyuTcpSocket(QObject *parent = nullptr);
     ~DouyuTcpSocket();
 
     QTimer *timer;

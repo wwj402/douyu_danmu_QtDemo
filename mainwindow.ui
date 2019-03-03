@@ -6,54 +6,123 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>483</width>
-    <height>389</height>
+    <width>579</width>
+    <height>466</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>DouYu_Danmu</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QLineEdit" name="lineEdit_roomid">
+        <property name="locale">
+         <locale language="Chinese" country="China"/>
+        </property>
         <property name="text">
          <string/>
         </property>
         <property name="placeholderText">
-         <string>房间号</string>
+         <string>Room ID</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="pushButton_start">
+        <property name="locale">
+         <locale language="Chinese" country="China"/>
+        </property>
         <property name="text">
-         <string>start</string>
+         <string>Start</string>
         </property>
        </widget>
       </item>
       <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+       <widget class="QPushButton" name="pushButton_stop">
+        <property name="text">
+         <string>Stop</string>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_ass">
+        <property name="text">
+         <string>.ass 720P</string>
         </property>
-       </spacer>
+       </widget>
       </item>
      </layout>
     </item>
-    <item row="1" column="0">
+    <item>
      <widget class="QTabWidget" name="tabWidget">
+      <property name="contextMenuPolicy">
+       <enum>Qt::NoContextMenu</enum>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
       <property name="documentMode">
        <bool>true</bool>
       </property>
+      <widget class="QWidget" name="tab_status">
+       <attribute name="title">
+        <string>Status</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QPlainTextEdit" name="plainTextEdit_status">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_danmu">
+       <attribute name="title">
+        <string>Danmuku</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QPlainTextEdit" name="plainTextEdit_danmu">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_gift">
+       <attribute name="title">
+        <string>Gift</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QPlainTextEdit" name="plainTextEdit_gift">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_other">
+       <attribute name="title">
+        <string>Other</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QPlainTextEdit" name="plainTextEdit_other">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -63,10 +132,21 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>483</width>
-     <height>23</height>
+     <width>579</width>
+     <height>26</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuLanguages">
+    <property name="toolTip">
+     <string notr="true"/>
+    </property>
+    <property name="title">
+     <string>Languages</string>
+    </property>
+    <addaction name="actionEnglish"/>
+    <addaction name="actionChimese_Simplifed"/>
+   </widget>
+   <addaction name="menuLanguages"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -77,6 +157,16 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionEnglish">
+   <property name="text">
+    <string>English</string>
+   </property>
+  </action>
+  <action name="actionChimese_Simplifed">
+   <property name="text">
+    <string>Chimese Simplifed</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

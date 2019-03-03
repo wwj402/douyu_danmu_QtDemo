@@ -12,8 +12,14 @@ const QString _Douyu_MagicString = "7oE9nPEG9xXV69phU31FYCLUagKeYtsF";
 const QString _Douyu_DanmuServer_HostName = "openbarrage.douyutv.com";
 const int     _Douyu_DanmuServer_Port = 8601;
 const int     _Douyu_DanmuServer_Intervals = 1000*30; //以毫秒记
+const int     _Douyu_RoomStatus_Intervals = 1000*60; //以毫秒记
 const QString _Douyu_Room_gid = "-9999";
-const qint32 _Douyu_CTS_Num = 0xb1020000; //斗鱼客户端到服务端的固定字段
+const quint32 _Douyu_CTS_Num = 0xb1020000; //斗鱼客户端到服务端的固定字段
+const QString _Douyu_RoomApiServer_HostName = \
+        "http://open.douyucdn.cn/api/RoomApi/room/";
+//        "https://open.douyucdn.cn/api/RoomApi/room/";
+//        "https://www.douyu.com/";
+
 
 /**
  * @brief _Douyu_RoomId json key集合

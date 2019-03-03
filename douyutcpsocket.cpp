@@ -44,10 +44,10 @@ void DouyuTcpSocket::loginAuth()
                               <<"loginreq" //登录请求
                               <<""
                               <<""
-                              <<"335166"
+                              <<danmu_rid
                               <<danmu_rid //房间号
                               <<_Douyu_Room_gid //分组
-                );
+                              );
     QString content = STTSerialization(key_list,value_list);
     this->messageWrite(content);
     request_state = "loginReq";
@@ -70,6 +70,13 @@ void DouyuTcpSocket::readDanmuMessage()
 
         if(messageMap["type"] == QString("chatmsg")||
                 messageMap["type"] == QString("dgb")||
+                messageMap["type"] == QString("uenter")||
+                messageMap["type"] == QString("onlinegift")||
+                messageMap["type"] == QString("ggbb")||
+                messageMap["type"] == QString("ssd")||
+                messageMap["type"] == QString("ranklist")||
+                messageMap["type"] == QString("rankup")||
+                messageMap["type"] == QString("rss")||
                 messageMap["type"] == QString("bc_buy_deserve"))
         {
             emit chatMessage(messageMap);
@@ -99,15 +106,16 @@ void DouyuTcpSocket::readDanmuMessage()
 
 void DouyuTcpSocket::messageWrite(QString &content)
 {
-    const char *content_ptr = content.toStdString().c_str();
-    QDataStream sendOut(&outBlock,QIODevice::WriteOnly);
+    QDataStream sendOut(&outBlock, QIODevice::WriteOnly);
     qint32 length = 4 + 4 + content.length() + 1;// 2个uint32字段长度+内容长度+'\0'
-    sendOut<<qint32(hexReverse_qint32(length))<<qint32(hexReverse_qint32(length))<<qint32(_Douyu_CTS_Num);
-    outBlock.append(content_ptr);
+    sendOut.setByteOrder(QDataStream::LittleEndian);
+    sendOut << qint32(length) << qint32(length) << qint32(689);
+    sendOut.setByteOrder(QDataStream::BigEndian);
+//    sendOut << hexReverse_qint32(length) << hexReverse_qint32(length) << quint32(_Douyu_CTS_Num);
+    outBlock.append(content);
     outBlock.append('\0');
-    tcpDanmuSoc.write(outBlock);
+    qDebug() << tcpDanmuSoc.write(outBlock) << outBlock << length;
     outBlock.resize(0);
-    delete content_ptr;
 }
 
 void DouyuTcpSocket::connectDanmuServer(QString &roomid)
@@ -127,13 +135,14 @@ void DouyuTcpSocket::displayError(QAbstractSocket::SocketError error)
 {
 
     QString error_str = tcpDanmuSoc.errorString();
-    qDebug()<<error_str;
+    qDebug()<<error_str << error;
     tcpDanmuSoc.close();
 }
 
 void DouyuTcpSocket::keepAlive()
 {
     timer->stop();
+    qDebug() << request_state;
     if(request_state == "receiveDanmu")
     {
         QString tick = QString::number(QDateTime::currentMSecsSinceEpoch()/1000);
@@ -143,7 +152,8 @@ void DouyuTcpSocket::keepAlive()
 
                                 );
         QStringList value_list = (QStringList()
-                                  <<"keeplive" //登录请求
+                                 // <<"keeplive" //登录请求
+                                  <<"mrkl"
                                   <<tick //时间戳
                     );
         QString content = STTSerialization(key_list,value_list);
@@ -228,7 +238,7 @@ QMap<QString,QString> DouyuTcpSocket::STTDeserialization(QString &ser_str)
 {
     QStringList list = ser_str.split('/');
     QMap<QString,QString> map;
-    QString pattern = "([\\w\\W]+)@=([\\w\\W]*)";
+    QString pattern = R"(([\w\W]+)@=([\w\W]*))";
     QRegExp regExp(pattern);
     regExp.setMinimal(false);
     for(int i = 0;i < list.count();i++)
@@ -249,14 +259,15 @@ qint32 DouyuTcpSocket::hexReverse_qint32(qint32 number)
 {
     qint32 numTo = 0;
     qint8 _1,_2,_3,_4;
-    _1 = number&0x000000ff;
-    _2 = (number&0x0000ff00) >> 8;
-    _3 = (number&0x00ff0000) >> 16;
-    _4 = (number&0xff000000) >> 24;
+    _1 = static_cast<qint8>(number & 0x000000ff);
+    _2 = static_cast<qint8>((number & 0x0000ff00) >> 8);
+    _3 = static_cast<qint8>((number & 0x00ff0000) >> 16);
+    _4 = static_cast<qint8>((number & 0xff000000) >> 24);
     numTo = _1 << 24;
     numTo += _2 << 16;
     numTo += _3 << 8;
     numTo += _4 ;
+    qDebug() << numTo;
     return numTo;
 }
 

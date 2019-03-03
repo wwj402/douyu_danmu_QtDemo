@@ -13,7 +13,7 @@ public:
     static QString getString(QMap<QString,QString> &messageMap);
     static QString getDashedLine();
 private:
-    static QString TE(QString color, QString font_family, QString txt);
+    static QString TE(const QString& color, const QString& font_family, const QString& txt);
 
 };
 

@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/qm">
+        <file>Douyu_zh_CN.qm</file>
+        <file>qtwidgets_zh_CN.qm</file>
+        <file>qt_zh_CN.qm</file>
+    </qresource>
+</RCC>
